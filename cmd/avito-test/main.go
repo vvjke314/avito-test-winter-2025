@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/vvjke314/avito-test-winter-2025/app"
+	"github.com/vvjke314/avito-test-winter-2025/internal/app"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 
 		}
 	}()
-	
+
 	a := app.NewApp()
 
 	// Инициализация приложения

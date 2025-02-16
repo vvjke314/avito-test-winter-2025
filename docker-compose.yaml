@@ -8,6 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: shop
+      TZ: 'GMT-3'
     volumes:
       # "./migrations/init.sql" - путь к миграциям БД
       - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql

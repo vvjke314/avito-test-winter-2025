@@ -20,7 +20,10 @@ func NewApp() *App {
 
 // Init инициализирует приложения, подключаясь к бд и проводя миграции по инициализации приложения
 func (a *App) Init() error {
-	dbConfig := config.LoadConfig()
+	dbConfig, err := config.LoadConfig()
+	if err != nil {
+		return fmt.Errorf("[config.LoadConfig] can't load env variables, %w", err)
+	}
 	connStr := "postgres://" + dbConfig.User + ":" + dbConfig.Password + "@" + dbConfig.Host + ":" + dbConfig.Port + "/" + dbConfig.DBName
 
 	conn, err := sql.Open("pgx", connStr)
@@ -50,5 +53,5 @@ func (a *App) Run(port string) error {
 		return fmt.Errorf("[gin.Engine.Run] :%w", err)
 	}
 
-	return nil	
+	return nil
 }

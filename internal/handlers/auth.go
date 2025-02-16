@@ -12,14 +12,14 @@ import (
 var secretKey = []byte("vvjke314")
 
 func Login(c *gin.Context) {
-	username := c.PostForm("username")
-
-	// Поиск пользователя в БД
+	// Начало запроса
+	var username string
+	// Начать обрабатывать запрос
 
 	tokenString, err := generateToken(username)
 	if err != nil {
-		resp := ds.NewErrorResponse()
-		resp.Logout(c, 500)
+		resp := ds.NewErrorResponse("Can't generate JWT-token")
+		resp.Response(c, 500)
 		return
 	}
 

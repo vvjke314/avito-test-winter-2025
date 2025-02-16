@@ -22,5 +22,26 @@ services:
       start_period: 10s
     networks:
       - internal
+  test_db:
+    image: postgres:13
+    container_name: test-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shop
+      TZ: 'GMT-3'
+    volumes:
+      # "./migrations/init.sql" - путь к миграциям БД
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "8432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d shop'"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    networks:
+      - internal
 networks:
   internal:

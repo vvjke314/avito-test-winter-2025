@@ -11,19 +11,13 @@ type ErrorResponse struct {
 	Errors string `json:"errors"`
 }
 
-func NewErrorResponse() *ErrorResponse {
-	return &ErrorResponse{}
+func NewErrorResponse(message string) *ErrorResponse {
+	return &ErrorResponse{
+		Errors: message,
+	}
 }
 
-// Logout фукнкция для отправки ответа ошибки клиенту
-func (er *ErrorResponse) Logout(c *gin.Context, code int) {
-	switch code {
-	case 400:
-		er.Errors = "Bad request"
-	case 401:
-		er.Errors = "Unauthorized"
-	case 500:
-		er.Errors = "Internal service error"
-	}
+// Response фукнкция для отправки ответа ошибки клиенту
+func (er *ErrorResponse) Response(c *gin.Context, code int) {
 	c.JSON(http.StatusBadRequest, er)
 }

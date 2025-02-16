@@ -1,22 +1,22 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE employees (
+CREATE TABLE IF NOT EXISTS employees (
     id UUID PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
     password_hash TEXT NOT NULL,
     coins INT DEFAULT 0
 
 );
-CREATE INDEX idx_username ON employees(username);
+CREATE INDEX IF NOT EXISTS idx_username ON employees(username);
 
-CREATE TABLE merch (
+CREATE TABLE IF NOT EXISTS merch (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     price INT NOT NULL
 );
-CREATE INDEX idx_merch_name ON merch(name);
+CREATE INDEX IF NOT EXISTS idx_merch_name ON merch(name);
 
-CREATE TABLE purchases (
+CREATE TABLE IF NOT EXISTS purchases (
     id UUID PRIMARY KEY,
     employee_id UUID NOT NULL,
     merch_id UUID NOT NULL,
@@ -25,10 +25,10 @@ CREATE TABLE purchases (
     FOREIGN KEY (employee_id) REFERENCES employees(id),
     FOREIGN KEY (merch_id) REFERENCES merch(id)
 );
-CREATE INDEX idx_purchase_employee ON purchases(employee_id);
-CREATE INDEX idx_purchase_merch ON purchases(merch_id);
+CREATE INDEX IF NOT EXISTS idx_purchase_employee ON purchases(employee_id);
+CREATE INDEX IF NOT EXISTS idx_purchase_merch ON purchases(merch_id);
 
-CREATE TABLE transfers (
+CREATE TABLE IF NOT EXISTS transfers (
     id UUID PRIMARY KEY,
     from_emp_id UUID NOT NULL,
     to_emp_id UUID NOT NULL,
@@ -37,8 +37,8 @@ CREATE TABLE transfers (
     FOREIGN KEY (from_emp_id) REFERENCES employees(id),
     FOREIGN KEY (to_emp_id) REFERENCES employees(id)
 );
-CREATE INDEX idx_transfer_from_emp ON transfers(from_emp_id);
-CREATE INDEX idx_transfer_to_emp ON transfers(to_emp_id);
+CREATE INDEX IF NOT EXISTS idx_transfer_from_emp ON transfers(from_emp_id);
+CREATE INDEX IF NOT EXISTS idx_transfer_to_emp ON transfers(to_emp_id);
 -- +goose StatementEnd
 
 -- +goose Down

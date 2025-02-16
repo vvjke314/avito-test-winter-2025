@@ -2,6 +2,8 @@ module github.com/vvjke314/avito-test-winter-2025
 
 go 1.23.2
 
+require github.com/jackc/pgx/v5 v5.7.2
+
 require (
 	github.com/bytedance/sonic v1.12.8 // indirect
 	github.com/bytedance/sonic/loader v0.2.3 // indirect

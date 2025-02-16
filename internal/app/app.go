@@ -8,6 +8,7 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/pressly/goose/v3"
 	"github.com/vvjke314/avito-test-winter-2025/config"
+	"github.com/vvjke314/avito-test-winter-2025/internal/middleware"
 	"github.com/vvjke314/avito-test-winter-2025/internal/repository"
 )
 
@@ -45,7 +46,11 @@ func (a *App) Init() error {
 
 // setRouting устанавливает возможные ручки для сервиса
 func (a *App) setRouting() {
-
+	a.Router.Use(middleware.CORSMiddleware())
+	a.Router.POST("/api/auth", a.Login)
+	a.Router.GET("/api/buy/:item", middleware.AuthenticateMiddleware, a.BuyItem)
+	a.Router.POST("/api/sendCoin", middleware.AuthenticateMiddleware, a.SendCoin)
+	a.Router.GET("/api/info", middleware.AuthenticateMiddleware, a.GetUserInfo)
 }
 
 // Run запускает приложение
